@@ -1,5 +1,7 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { rootAuthLoader } from '@clerk/remix/ssr.server';
+import { ClerkApp, ClerkCatchBoundary } from '@clerk/remix';
 import styles from './tailwind.css';
 
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
@@ -10,7 +12,15 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export default function App() {
+export const loader: LoaderFunction = (args) => {
+  return rootAuthLoader(args, ({ request }) => {
+    const { sessionId, userId, getToken } = request.auth;
+    // fetch data
+    return { yourData: 'here' };
+  });
+};
+
+function App() {
   return (
     <html lang="en">
       <head>
@@ -26,3 +36,7 @@ export default function App() {
     </html>
   );
 }
+
+export default ClerkApp(App);
+
+export const CatchBoundary = ClerkCatchBoundary();

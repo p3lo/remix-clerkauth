@@ -18,6 +18,7 @@
     "start": "remix-serve build"
   },
   "dependencies": {
+    "@clerk/remix": "^0.3.11",
     "@mantine/core": "^4.1.4",
     "@mantine/hooks": "^4.1.4",
     "@mantine/rte": "^4.1.4",
