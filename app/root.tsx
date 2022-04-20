@@ -14,9 +14,9 @@ export const meta: MetaFunction = () => ({
 
 export const loader: LoaderFunction = (args) => {
   return rootAuthLoader(args, ({ request }) => {
-    const { sessionId, userId, getToken } = request.auth;
-    // fetch data
-    return { yourData: 'here' };
+    const { userId, sessionId, getToken } = request.auth;
+    console.log('Root loader auth:', { userId, sessionId, getToken });
+    return { message: `Hello from the root loader :)` };
   });
 };
 
